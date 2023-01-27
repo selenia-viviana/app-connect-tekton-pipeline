@@ -1,4 +1,4 @@
-#
+
 # Tekton pipeline for deploying App Connect Enterprise integration servers
 #
 #  This will:
@@ -29,8 +29,6 @@ spec:
       description: |+
         Namespace to deploy the App Connect Enterprise resources to.
         There needs to be an App Connect operator watching this namespace
-
-
     # ########################################################
     # where to find the projects to create
     # ########################################################
@@ -41,13 +39,23 @@ spec:
         URL for the git repository containing the App Connect project to
         deploy. If credentials are required, these should be available in
         a secret annotated with the git hostname.
-
+        
+    - name: git-url
+      type: string
+      description: URL GITHUB DONDE ESTAN LOS YAML PARA EL DESPLIEGUE
+      default: "https://github.com/selenia-viviana/app-connect-tekton-pipeline"
+      
+    - name: git-revision
+      type: string
+      description: NOMBRE DE RAMA USADA EN GITHUB
+      default: "master" 
+      
     - name: ace-project-name
       description: |+
         Name of the App Connect project to deploy.
         This should be the name of a folder in ace-projects in the
         git-repository being cloned.
-
+        
     - name: test-project-name
       default: ""
       description: |+
@@ -56,133 +64,7 @@ spec:
         The new integration server will only be deployed if all of the tests
         in this project pass.
         Leave this as an empty string if there are no tests to run.
-
-    # ########################################################
-    #
-    # files in the git repository that need to be updated
-    #
-    # Each string in the array should contain a space-separated list of
-    #  strings that looks like this:
-    #    file-to-update value-to-update key secret namespace
-    #
-    # where:
-    #   file-to-update   - relative location of the template file to be updated
-    #   value-to-update  - the value in the template file that should be replaced
-    #   key              - which value to retrieve from a secret to replace the template value with
-    #   secret           - name of the secret to retrieve value from
-    #   namespace        - namespace of the secret to retrieve value from
-    #
-    # ########################################################
-
-    - name: credentials-to-update
-      type: array
-      default:
-        - ""
-
-    # ########################################################
-    # optional supporting resources to deploy
-    # ########################################################
-
-    # Java project
-    - name: java-project-name
-      default: ""
-      description: |+
-        Name of Java project containing implementations of Java Compute nodes.
-        This should be the name of a folder in ace-projects in the
-        git-repository being cloned.
-        Leave as an empty string if there is no Java project needed in the
-        application.
-
-    # setdbparms.txt file
-    - name: setdbparms-file
-      default: ""
-      description: |+
-        Location of a setdbparms.txt file to include in the project.
-        This should be the location of a file in ace-projects in the
-        git-repository being cloned.
-        Leave as an empty string if there are no credentials needed in the
-        application.
-    - name: setdbparms-name
-      default: ""
-      description: |+
-        Name to give to the setdbparms.txt file when deployed to OpenShift.
-        Leave as an empty string if there are no credentials needed in the
-        application.
-
-    # server.conf.yaml
-    - name: serverconf-file
-      default: ""
-      description: |+
-        Location of a server.conf.yaml file to include in the project.
-        This should be the location of a file in ace-projects in the
-        git-repository being cloned.
-        Leave as an empty string if no custom configuration is needed in the
-        application.
-    - name: serverconf-name
-      default: ""
-      description: |+
-        Name to give to the server.conf.yaml file when deployed to OpenShift.
-        Leave as an empty string if no custom configuration is needed in the
-        application.
-
-    # Policy project
-    - name: policies-project-folder
-      default: ""
-      description: |+
-        Location of a project containing App Connect policies.
-        This should be the name of a folder in ace-projects in the
-        git-repository being cloned.
-        Leave as an empty string if there are no policies needed in the
-        application.
-    - name: policies-project-name
-      default: ""
-      description: |+
-        Name to give to the policy project when deployed to OpenShift.
-        Leave as an empty string if there are no policies needed in the
-        application.
-
-    # Loopback data sources
-    - name: datasources-project-folder
-      default: ""
-      description: |+
-        Location of a project containing Loopback data sources.
-        This should be the name of a folder in ace-projects in the
-        git-repository being cloned.
-        Leave as an empty string if there are no data sources needed in the
-        application.
-    - name: datasources-project-name
-      default: ""
-      description: |+
-        Name to give to the data sources project when deployed to OpenShift.
-        Leave as an empty string if there are no data sources needed in the
-        application.
-
-    # truststore file
-    - name: truststore-p12-secret
-      default: ""
-      description: |+
-        Name of a secret containing a pkcs12 file to use as
-        the basis for a truststore for App Connect.
-        Leave as an empty string if no truststore is needed.
-    - name: truststore-p12-secret-namespace
-      default: ""
-      description: |+
-        Namespace for a secret containing a pkcs12 file to use as
-        the basis for a truststore for App Connect.
-        Leave as an empty string if no truststore is needed.
-    - name: truststore-p12-secret-key
-      default: "ca.p12"
-      description: Key of the secret containing the pkcs12 file.
-    - name: truststore-p12-secret-password
-      default: "ca.password"
-      description: Key of the secret containing the pkcs12 password.
-    - name: truststore-name
-      default: ""
-      description: |+
-        Name to give to the truststore created when deployed to OpenShift.
-        Leave as an empty string if no truststore is needed.
-
-
+   
     # ########################################################
     # App Connect options
     #
@@ -209,7 +91,13 @@ spec:
         name: git-clone-home
       params:
         - name: url
-          value: "$(params.git-repository)"
+          value: $(params.git-url)
+        - name: subdirectory
+          value: ""
+        - name: deleteExisting
+          value: "true"
+        - name: revision
+          value: $(params.git-revision)
       workspaces:
         - name: output
           workspace: pipeline-shared-workspace
@@ -498,7 +386,7 @@ spec:
           value: "$(params.app-connect-enterprise-license)"
         # --------------------------------------------------------------
         # details of the Docker image that will be created to run the
-        #  integration server
+        #  integration server
         # --------------------------------------------------------------
         - name: ace-server-base-image
           value: "$(params.app-connect-enterprise-base-image)"
