@@ -43,7 +43,7 @@ spec:
     - name: git-url
       type: string
       description: URL GITHUB DONDE ESTAN LOS YAML PARA EL DESPLIEGUE
-      default: "https://github.com/selenia-viviana/app-connect-tekton-pipeline"    
+      default: "https://github.com/selenia-viviana/app-connect-tekton-pipeline.git"    
       
     - name: ace-project-name
       description: |+
