@@ -20,7 +20,7 @@ spec:
   params:
     # ########################################################
     # where to run the App Connect application
-    # ########################################################
+    # #######################################################
     - name: integration-server-name
       description: Name of the IntegrationServer to create
 
@@ -64,6 +64,27 @@ spec:
         The new integration server will only be deployed if all of the tests
         in this project pass.
         Leave this as an empty string if there are no tests to run.
+     # ########################################################
+    #
+    # files in the git repository that need to be updated
+    #
+    # Each string in the array should contain a space-separated list of
+    #  strings that looks like this:
+    #    file-to-update value-to-update key secret namespace
+    #
+    # where:
+    #   file-to-update   - relative location of the template file to be updated
+    #   value-to-update  - the value in the template file that should be replaced
+    #   key              - which value to retrieve from a secret to replace the template value with
+    #   secret           - name of the secret to retrieve value from
+    #   namespace        - namespace of the secret to retrieve value from
+    #
+    # ########################################################
+
+    - name: credentials-to-update
+      type: array
+      default:
+        - ""
    
     # ########################################################
     # App Connect options
