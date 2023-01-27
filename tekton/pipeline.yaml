@@ -40,6 +40,11 @@ spec:
         URL for the git repository containing the App Connect project to
         deploy. If credentials are required, these should be available in
         a secret annotated with the git hostname.
+    - name: git-url
+      type: string
+      description: URL GITHUB DONDE ESTAN LOS YAML PARA EL DESPLIEGUE
+      default: "https://github.com/selenia-viviana/app-connect-tekton-pipeline"    
+      
     - name: ace-project-name
       description: |+
         Name of the App Connect project to deploy.
@@ -198,7 +203,7 @@ spec:
         name: git-clone-home
       params:
         - name: url
-          value: "$(params.git-repository)"
+          value: "$(params.git-url)"
       workspaces:
         - name: output
           workspace: pipeline-shared-workspace
