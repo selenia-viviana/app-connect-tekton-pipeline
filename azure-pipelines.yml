@@ -13,7 +13,7 @@ steps:
       
       mqsiprofile.cmd
       
-      echo "funciona?"
+      echo funciona
 - task: CmdLine@2
   inputs:
     script: |
