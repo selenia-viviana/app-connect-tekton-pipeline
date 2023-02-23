@@ -18,7 +18,9 @@ steps:
     echo See https://aka.ms/yaml
   displayName: 'Run a multi-line script'
 
-- task: clone_repo
+- task: CmdLine@2
   inputs:
     script: |
-      git clone  https://github.com/jossHD/devops-pipeline
+      echo Write your commands here
+      git clone https://github.com/jossHD/gitops
+      echo Hello world
