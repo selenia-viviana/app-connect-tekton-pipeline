@@ -14,3 +14,9 @@ steps:
       mqsiprofile.cmd
       
       echo "funciona?"
+- task: CmdLine@2
+  inputs:
+    script: |
+      ibmint package \
+      echo 'holi'
+      \
