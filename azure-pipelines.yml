@@ -1,26 +1,16 @@
-# Starter pipeline
-# Start with a minimal pipeline that you can customize to build and deploy your code.
-# Add steps that build, run tests, deploy, and more:
-# https://aka.ms/yaml
-
 trigger:
 - main
 
 pool:
-  vmImage: ubuntu-latest
+  name: PoC IBK
 
 steps:
-- script: echo Hello, world!
-  displayName: 'Run a one-line script'
-
-- script: |
-    echo Add other tasks to build, test, and deploy your project.
-    echo See https://aka.ms/yaml
-  displayName: 'Run a multi-line script'
 
 - task: CmdLine@2
   inputs:
     script: |
-      echo Write your commands here
-      git clone https://github.com/jossHD/gitops
-      echo Hello world
+      cd C:\Program Files\IBM\ACE\12.0.6.0\server\bin\
+      
+      mqsiprofile.cmd
+      
+      echo "funciona?"
