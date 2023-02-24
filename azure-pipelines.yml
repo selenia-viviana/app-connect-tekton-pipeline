@@ -9,6 +9,8 @@ steps:
 
 - task: CmdLine@2
   inputs:
-    script: 'CALL C:\Program Files\IBM\ACE\12.0.6.0\ace.cmd mqsicreateworkdir %TEMP%\\ace-server'
+    script: |
+      cd C:\Program Files\IBM\ACE\12.0.6.0
+      CALL ace.cmd mqsicreateworkdir %TEMP%\\ace-server
 
 
