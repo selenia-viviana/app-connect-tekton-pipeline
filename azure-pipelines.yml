@@ -14,3 +14,9 @@ steps:
       ace.cmd
       mqsicreateworkdir --help
       echo holi
+- task: CmdLine@2
+  inputs:
+    script: |
+      cd "C:\Users\001664815\agent\_work\_temp\6c42c186-2e8b-492f-bf00-afbf67601cad.cmd
+      mqsicreateworkdir --help
+      echo holi
