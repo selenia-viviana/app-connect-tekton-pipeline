@@ -9,7 +9,6 @@ steps:
 
 - task: CmdLine@2
   inputs:
-    script: |
-    CALL $ace$ mqsicreateworkdir %TEMP%\\ace-server
+    script: 'CALL $ace$ mqsicreateworkdir %TEMP%\\ace-server'
 
 
