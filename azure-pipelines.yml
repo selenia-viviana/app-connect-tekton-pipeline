@@ -13,3 +13,4 @@ steps:
       
       ace.cmd
       mqsicreateworkdir --help
+      echo holi
