@@ -4,19 +4,21 @@ trigger:
 pool:
   name: PoC IBK
 
+parameters:
+  - name: ACE_COMMAND = "C:\\Program Files\\IBM\\ACE\\12.0.7.0\\ace"
+
 steps:
 
 - task: CmdLine@2
   inputs:
-    script: |
-      cd C:\Program Files\IBM\ACE\12.0.6.0\server\bin\
-      
-      mqsiprofile.cmd
-      
-      echo funciona
+    script: 'cd C:\Program Files\IBM\ACE\12.0.6.0\ace'
+
 - task: CmdLine@2
   inputs:
-    script: |
-      ibmint package \
-      echo 'holi'
-      \
+    script: 'ace.cmd'
+- task: CmdLine@2
+  inputs:
+    script: 'CALL "%ACE_COMMAND%" mqsicreateworkdir -- help'
+- task: CmdLine@2
+  inputs:
+    script: 'mqsicreateworkdir --help'
