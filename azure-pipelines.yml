@@ -4,14 +4,12 @@ trigger:
 pool:
   name: PoC IBK
 
-parameters:
-  - name: ACE_COMMAND = "C:\\Program Files\\IBM\\ACE\\12.0.7.0\\ace"
-
 steps:
 
 - task: CmdLine@2
   inputs:
-    script: 'CALL "%ACE_COMMAND%" mqsicreateworkdir -- help'
-- task: CmdLine@2
-  inputs:
-    script: 'mqsicreateworkdir --help'
+    script: |
+      cd C:\Program Files\IBM\ACE\12.0.6.0
+      
+      ace.cmd
+      mqsicreateworkdir --help
