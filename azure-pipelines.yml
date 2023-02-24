@@ -4,15 +4,12 @@ trigger:
 pool:
   name: PoC IBK
 parameters:
-  - ace
+  - name: ace
 steps:
 
 - task: CmdLine@2
   inputs:
     script: |
-    CALL $ace
-    echo "holi"
+    CALL $ace$ mqsicreateworkdir %TEMP%\\ace-server
 
-- task: CmdLine@2
-  inputs:
-    script: 'mqsicreateworkdir --help'
+
