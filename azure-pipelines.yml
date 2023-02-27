@@ -31,7 +31,7 @@ steps:
     displayName: "Running tests"
     inputs:
       script: |
-        CALL "C:\Program Files\IBM\ACE\12.0.6.0\ace.cmd" IntegrationServer --work-dir $(system.defaultworkingdirectory)\ace-projects\TEST_SERVER --test-project simple_api_Test --start-msgflows false
+        CALL "C:\Program Files\IBM\ACE\12.0.6.0\ace.cmd" IntegrationServer --work-dir $(system.defaultworkingdirectory)\ace-projects\TEST_SERVER --test-project simple-demo_Test --start-msgflows false
     
   - task: JfrogCli@1
     inputs:
