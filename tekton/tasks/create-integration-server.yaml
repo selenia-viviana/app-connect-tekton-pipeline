@@ -70,6 +70,11 @@ spec:
 
   steps:
   
+    - name: fix-permissions
+      image: image-registry.openshift-image-registry.svc:5000/openshift/tools
+      script: |
+        #!/bin/sh
+        chmod -R 777 /tekton/creds/.docker
     - name: prepare
       image: image-registry.openshift-image-registry.svc:5000/openshift/tools
       script: |
