@@ -69,11 +69,24 @@ spec:
       description: workspace with the resources
 
   steps:
-    - name: run
+  
+    - name: prepare
       image: image-registry.openshift-image-registry.svc:5000/openshift/tools
       script: |
         #!/bin/sh
-
+        mkdir -p /workspace/.docker
+        chmod 777 /workspace/.docker
+    - name: run
+      image: image-registry.openshift-image-registry.svc:5000/openshift/tools
+      env:
+        - name: DOCKER_CONFIG
+          value: /workspace/.docker
+      script: |
+        #!/bin/sh
+    #- name: run
+     # image: image-registry.openshift-image-registry.svc:5000/openshift/tools
+     # script: |
+        #!/bin/sh
         set -e
 
         echo "creating base ACE imagestream"
